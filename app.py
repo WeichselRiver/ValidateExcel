@@ -1,10 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import FieldList
+import pandas as pd
 
 class FileUploadForm(FlaskForm):
-    uploads = FieldList(FileField())
+    upload = FileField()
 
 DEBUG = True
 SECRET_KEY = 'secret'
@@ -17,19 +17,14 @@ app.config.from_object(__name__)
 def index():
 
     form = FileUploadForm()
-    for i in range(5):
-        form.uploads.append_entry()
 
-    filedata = []
-
-    if form.validate_on_submit():
-        for upload in form.uploads.entries:
-            filedata.append(upload)
-
-    return render_template("index.html",
-                           form=form,
-                           filedata=filedata)
-
+    if request.method == 'POST':
+        f = request.files['upload']
+        dta_xls = pd.read_excel(f)
+        return dta_xls.to_html()
+        
+    if request.method == 'GET':
+        return render_template("index.html", form=form)
 
 if __name__ == "__main__":
     app.run()
