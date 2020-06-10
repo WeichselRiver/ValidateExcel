@@ -26,5 +26,10 @@ def index():
     if request.method == 'GET':
         return render_template("index.html", form=form)
 
+
+@app.route("/report")
+def report():
+    return render_template("report.html")
+
 if __name__ == "__main__":
     app.run()
