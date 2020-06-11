@@ -9,6 +9,7 @@
         <h1>Upload your Excel file!</h1>
 
         <form method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
              <p>
                 {{ form.upload }}
             </p>

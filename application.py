@@ -1,16 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 import pandas as pd
 
 class FileUploadForm(FlaskForm):
-    upload = FileField()
-
-DEBUG = True
-SECRET_KEY = 'secret'
+    upload = FileField('xlsx-file', validators=[FileRequired(), FileAllowed(["xlsx"], 'Only upload xlsx-files')])
+ 
 
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config['SECRET_KEY']= 'secret'
 
 
 @app.route("/", methods=("GET", "POST",))
@@ -32,4 +30,4 @@ def report():
     return render_template("report.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
