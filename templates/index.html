@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <link rel="stylesheet" href="static/style.css">
-    </head>
-    <body>
 
-        <h1>Upload your Excel file!</h1>
+<head>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div class="upload">
+        <h1>Upload your Bolzenliste!</h1>
 
         <form method="POST" enctype="multipart/form-data">
             {{ form.csrf_token }}
-             <p>
+            <p>
                 {{ form.upload }}
             </p>
             <p>
                 <input type="submit" value="Submit">
             </p>
         </form>
-        <div>
-            {{ tbl|safe }}
-        </div>
-        
-    </body>
+    </div>
+
+
+    <div>
+        <h1>Report of validation</h1>
+        <ul id='props'></ul>
+    </div>
+
+    <script>
+        const dta = JSON.parse('{{ tbl|tojson }}')
+        for (const [key, value] of Object.entries(dta)){
+            const entr = document.createElement("li");
+            entr.innerHTML = key + value;
+            document.getElementById('props').appendChild(entr);
+        }
+
+
+    </script>
+
+</body>
+
 </html>
