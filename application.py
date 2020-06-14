@@ -13,21 +13,18 @@ class FileUploadForm(FlaskForm):
 app = Flask(__name__)
 app.config['SECRET_KEY']= 'secret'
 
+ext_data = {
+    'MichNr' : 1,
+    'Beschreibung' : 'kreuzer'
+}
 
-
-def validate (dta):
-    Mn = dta['MichNr']
-    
-
+def validate():
+     
     class Marke(BaseModel):
         MichNr: int
+        Beschreibung : str
 
-
-
-
-
-
-
+    return Marke(**ext_data)
 
 @app.route("/", methods=("GET", "POST",))
 def index():
@@ -43,7 +40,8 @@ def index():
                 "Filename: " : f.filename,
                 "Date and time: " : str(datetime.utcnow()),
                 "Number of rows: " : dta_xls.shape[0],
-                "Number of columns: " : dta_xls.shape[1]
+                "Number of columns: " : dta_xls.shape[1],
+                "Validation: " : str(validate())
             }
             print(json.dumps(result))
 
