@@ -10,7 +10,7 @@ dta = pd.read_excel(r'D:\Programming\html\Bilder\test.xlsx')
 
 for i in list(range(dta.shape[0])):
     try:
-        Marke(MichNr=dta[MichNr][i], name = "Hallo")
+        Marke(MichNr=dta['MichNr'][i], name = "Hallo")
     except ValidationError as e:
         print(e)
 
