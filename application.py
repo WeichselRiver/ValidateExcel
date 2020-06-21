@@ -41,7 +41,7 @@ def index():
                 "Date and time: " : str(datetime.utcnow()),
                 "Number of rows: " : dta_xls.shape[0],
                 "Number of columns: " : dta_xls.shape[1],
-                "Validation: " : str(validate())
+                "Validation: " : str(validate_df(dta_xls))
             }
             print(json.dumps(result))
 
